@@ -7,7 +7,7 @@ using Tamir.SharpSsh;
 
 namespace Nishtown.Utilities
 {
-    class SSH : IDisposable
+    public class SSH : IDisposable
     {
         private SshExec sshcon;
         public string server { get; set; }

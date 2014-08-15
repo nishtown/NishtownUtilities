@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Nishtown.Utilities
 {
-    class Log
+    public class Log
     {
 
         public string logfile { get; set; }

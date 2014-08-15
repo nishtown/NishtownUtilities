@@ -7,7 +7,7 @@ using System.Net.Mail;
 
 namespace Nishtown.Utilities
 {
-    class Email
+    public class Email
     {
         public string To { get; set; }
         public string From { get; set; }

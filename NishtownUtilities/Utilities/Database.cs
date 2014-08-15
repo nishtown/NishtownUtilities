@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Nishtown.Utilities
 {
-    class Database
+    public class Database
     {
 
         private string connectionString { get; set; }
