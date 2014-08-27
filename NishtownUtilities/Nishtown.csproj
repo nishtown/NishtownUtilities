@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utilities\IPLookup.cs" />
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\Pop3mail.cs" />
     <Compile Include="Utilities\Database.cs" />
