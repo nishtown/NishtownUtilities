@@ -33,7 +33,6 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data">
       <HintPath>..\..\..\..\Dropbox\DLLs\MySql.Data.dll</HintPath>
       <EmbedAssembly>true</EmbedAssembly>
@@ -65,6 +64,11 @@
     <Compile Include="Utilities\Email.cs" />
     <Compile Include="Utilities\NetworkImpersonation.cs" />
     <Compile Include="Utilities\SSH.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MySql.Data.dll" />
+    <Content Include="System.Data.SQLite.dll" />
+    <Content Include="Tamir.SharpSSH.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
