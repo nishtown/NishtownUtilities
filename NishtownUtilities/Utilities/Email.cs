@@ -25,6 +25,10 @@ namespace Nishtown.Utilities
             emlMessage.From = new MailAddress(From);
             emlMessage.Subject = Subject;
             emlMessage.Body = Body;
+            if (ReplyTo != null)
+            {
+                emlMessage.Headers.Add("Reply-To", ReplyTo);
+            }
             if (Filename != null)
             {
                 emlMessage.Attachments.Add(new Attachment(Filename));
