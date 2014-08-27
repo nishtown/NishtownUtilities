@@ -16,9 +16,9 @@ namespace Nishtown.Utilities
 
         public string apikey { private get; set; }
 
-        public IPGeolocationInformation GetInfo(IPAddress IP)
+        public IPGeolocationInformation GetInfo(IPAddress ip)
         {
-            IPGeolocationInformation ipg = IP as IPGeolocationInformation;
+            IPGeolocationInformation ipg = new IPGeolocationInformation(ip);
 
             string key = this.apikey;
             string url = "http://api.ipinfodb.com/v3/ip-city/?format=xml&key=" + key + "&ip=";
@@ -27,7 +27,7 @@ namespace Nishtown.Utilities
 
             try
             {
-                var req = WebRequest.Create(url + IP) as HttpWebRequest;
+                var req = WebRequest.Create(url + ip) as HttpWebRequest;
 
                 XmlDocument xob = null;
 
@@ -100,5 +100,12 @@ namespace Nishtown.Utilities
         {
 
         }
+
+        public IPGeolocationInformation(IPAddress address)
+            : base(address.GetAddressBytes())
+        {
+
+        }
+
     }
 }
