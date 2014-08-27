@@ -83,5 +83,22 @@ namespace Nishtown.Utilities
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string TimeZone { get; set; }
+
+        public IPGeolocationInformation(byte[] address)
+            : base(address)
+        {
+
+        }
+
+        public IPGeolocationInformation(long address)
+            : base(address)
+        {
+
+        }
+        public IPGeolocationInformation(byte[] address, long scopeid)
+            : base(address, scopeid)
+        {
+
+        }
     }
 }
