@@ -15,6 +15,7 @@ namespace Nishtown.Utilities
         public string Subject { get; set; }
         public string Filename { get; set; }
         public string Body { get; set; }
+        public string ReplyTo { get; set; }
 
         public void send()
         {
