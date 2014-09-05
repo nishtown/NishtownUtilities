@@ -37,7 +37,7 @@ namespace Nishtown.Utilities
         {
             if (File.Exists(logfile))
             {
-                DateTime ft = File.GetLastWriteTime(logfile);
+                DateTime ft = File.GetCreationTime(logfile);
 
                 if ((DateTime.Now.Date - ft.Date).TotalDays >= rotatedays)
                 {

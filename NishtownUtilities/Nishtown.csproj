@@ -38,6 +38,12 @@
       <EmbedAssembly>true</EmbedAssembly>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Renci.SshNet">
+      <HintPath>..\..\..\DLLs\Renci.SshNet.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <EmbedAssembly>true</EmbedAssembly>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
@@ -50,11 +56,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tamir.SharpSSH">
-      <HintPath>..\..\..\..\Dropbox\DLLs\Tamir.SharpSSH.dll</HintPath>
-      <EmbedAssembly>true</EmbedAssembly>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Utilities\IPLookup.cs" />
@@ -69,7 +70,6 @@
   <ItemGroup>
     <Content Include="MySql.Data.dll" />
     <Content Include="System.Data.SQLite.dll" />
-    <Content Include="Tamir.SharpSSH.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tamir.SharpSsh;
+using Renci.SshNet;
 
 namespace Nishtown.Utilities
 {
     public class SSH : IDisposable
     {
-        private SshExec sshcon;
-        public string server { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        private SshClient sshcon;
+        public string server { private get; set; }
+        public string username { private get; set; }
+        public string password { private get; set; }
         private bool bConnected = false;
 
         bool disposed = false;
@@ -49,18 +49,32 @@ namespace Nishtown.Utilities
 
             if (disposing)
             {
-                this.close();
+                this.Close();
+                if (IsConnected())
+                    sshcon.Disconnect();
                 username = null;
                 password = null;
                 server = null;
-                sshcon = null;
+                sshcon.Dispose();
             }
 
             disposed = true;
         }
 
+        public string Command(string cmd)
+        {
+            if (IsConnected())
+            {
+                SshCommand sshcmd = sshcon.RunCommand(cmd);
+                return sshcmd.Result;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-        public void connect()
+        public void Connect()
         {
             if (server == null)
             {
@@ -75,7 +89,7 @@ namespace Nishtown.Utilities
                 throw new Exception("No password supplied");
             }
 
-            sshcon = new SshExec(server, username, password);
+            sshcon = new SshClient(server, username, password);
             try
             {
                 sshcon.Connect();
@@ -90,32 +104,32 @@ namespace Nishtown.Utilities
             }
         }
 
-        public bool isConnected()
+        public bool IsConnected()
         {
             return bConnected;
         }
 
-        public void connect(string user, string pass)
+        public void Connect(string user, string pass)
         {
             username = user;
             password = pass;
-            connect();
+            Connect();
         }
 
-        public void connect(string host, string user, string pass)
+        public void Connect(string host, string user, string pass)
         {
             server = host;
             username = user;
             password = pass;
 
-            connect();
+            Connect();
         }
 
-        public void close()
+        public void Close()
         {
-            if (isConnected())
+            if (IsConnected())
             {
-                sshcon.Close();
+                sshcon.Disconnect();
             }
         }
 
