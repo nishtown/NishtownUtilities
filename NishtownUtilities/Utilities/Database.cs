@@ -14,17 +14,14 @@ namespace Nishtown.Utilities
 
         private string connectionString { get; set; }
         private MySqlConnection sqlconn;
+        private ConnectionSettings connectionsettings;
         public bool isOpen { get; set; }
 
-        public Database(string connstring)
+        public Database(ConnectionSettings settings)
         {
-            this.connectionString = connstring;
-            sqlconn = new MySqlConnection(connectionString);
-        }
-
-        public Database(string location, string database, string username, string password)
-        {
-            this.connectionString = "Server=" + location + ";Database=" + database + ";Uid=" + username + ";Pwd=" + password + ";";
+            this.connectionsettings = settings;
+            this.connectionString = "Server=" + settings.Server + ";Database=" + settings.DatabaseName + ";Uid=" + settings.Username
+                + ";Pwd=" + settings.Password + ";";
             sqlconn = new MySqlConnection(connectionString);
         }
 
@@ -136,5 +133,15 @@ namespace Nishtown.Utilities
 
         }
 
+    }
+
+    public class ConnectionSettings
+    {
+        public ConnectionSettings();
+
+        public string Server { get; set; }
+        public string DatabaseName { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }
