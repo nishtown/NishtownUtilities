@@ -18,6 +18,7 @@ namespace Nishtown.Utilities.LocationServices
         public double Latitude { get; private set; }
         public double Dst { get; private set; }
         public double Gmt { get; private set; }
+        public string Map { get; private set; }
 
         private string api = "";
 
@@ -26,28 +27,21 @@ namespace Nishtown.Utilities.LocationServices
         public Timezone(string apikey, string address)
         {
             api = apikey;
-            Query(address);
+            GPSPos gps = new GPSPos(api);
+            Query(gps.Locate(address));
         }
 
-        public void Query(string address)
+        public void Query(GPS gps)
         {
-            Location = address;
-            var requestUri = string.Format("https://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false&key={1}", Uri.EscapeDataString(address), api);
+            Longitude = gps.Longitude;
+            Latitude = gps.Latitude;
+            Location = gps.Location;
+
+            var requestUri = string.Format("https://maps.googleapis.com/maps/api/timezone/xml?location={0}&key={1}&timestamp={2}", Latitude + "," + Longitude, api, UnixTimestampFromDateTime(DateTime.Now));
             var request = WebRequest.Create(requestUri);
             var response = request.GetResponse();
             var xdoc = XDocument.Load(response.GetResponseStream());
-            var result = xdoc.Element("GeocodeResponse").Element("result");
-            var locationElement = result.Element("geometry").Element("location");
-
-            Latitude = Convert.ToDouble(locationElement.Element("lat").Value);
-            Longitude = Convert.ToDouble(locationElement.Element("lng").Value);
-
-
-            requestUri = string.Format("https://maps.googleapis.com/maps/api/timezone/xml?location={0}&key={1}&timestamp={2}", latitude + "," + longitude, apikey, UnixTimestampFromDateTime(DateTime.Now));
-            request = WebRequest.Create(requestUri);
-            response = request.GetResponse();
-            xdoc = XDocument.Load(response.GetResponseStream());
-            result = xdoc.Element("TimeZoneResponse");
+            var result = xdoc.Element("TimeZoneResponse");
 
             var rawoffset = Convert.ToDouble(result.Element("raw_offset").Value);
             var dstoffset = Convert.ToDouble(result.Element("dst_offset").Value);
@@ -66,7 +60,7 @@ namespace Nishtown.Utilities.LocationServices
             Dst = dstoffset;
             Gmt = rawoffset;
 
-
+            Map = string.Format("https://maps.googleapis.com/maps/api/staticmap?center={0}&zoom=2&size=400x400&markers={1}&key={2}", Longitude + "," + Latitude, Longitude + "," + Latitude, api);
         }
 
         private long UnixTimestampFromDateTime(DateTime date)
@@ -76,4 +70,5 @@ namespace Nishtown.Utilities.LocationServices
             return unixTimestamp;
         }
     }
+
 }
